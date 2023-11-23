@@ -9,11 +9,11 @@ class Funções:
         self.vulcão = self.parece_um_vulcão(x, y)
     
     def montanha(self, x, y):
-        self.pico_de_montanha = (3**-(x**2 + y**2))+(0.36 * 2**-((x)**2 + (y-2.4)**2))+(0.36 * 2**-((x)**2 + (y+2.4)**2))
+        self.pico_de_montanha = (3.5**-(x**2 + y**2))+(0.32 * 2**-((x+2)**2 + (y-1.2)**2))+(0.32 * 2**-((x+2)**2 + (y+1.2)**2))
         return self.pico_de_montanha
 
     def parece_um_vulcão(self, x, y):
-        self.vulcão = np.sinh(np.sqrt(x**2 + y**2))
+        self.vulcão = -np.cos(1.15*np.sqrt(2+x**2 + y**2))
         return self.vulcão
 
     def gradiente_montanha(self, x, y):
@@ -30,7 +30,7 @@ class Funções:
 class Plot:
 
     def __init__(self):
-        self.gráfico = plt.figure(figsize=(32, 24))
+        self.gráfico = plt.figure(figsize=(24, 16))
 
     def subplot(self, x, y, z, dx, dy, title, i):
         ax = self.gráfico.add_subplot(i, projection='3d')
@@ -38,16 +38,16 @@ class Plot:
         ax.quiver(x[::3, ::3], y[::3, ::3], z[::3, ::3], dx[::3, ::3], dy[::3, ::3], 0, length=0.3, normalize=True, color='r')
         ax.set_title(title)
 
-x = np.linspace(-3, 3, 50)
-y = np.linspace(-5, 5, 50)
+x = np.linspace(-4, 4, 40)
+y = np.linspace(-5, 5, 40)
 x, y = np.meshgrid(x, y)
 
 f = Funções(x, y)
 plot = Plot()
 dx, dy = f.gradiente_montanha(x, y)
-sp_mt = plot.subplot(x, y, f.pico_de_montanha, dx, dy, "Montanha: (3**-(x**2 + y**2)", 121)
+sp_mt = plot.subplot(x, y, f.pico_de_montanha, dx, dy, "Montanha: (3.5**-(x**2 + y**2))+(0.32 * 2**-((x+2)**2 + (y-1.2)**2))+(0.32 * 2**-((x+2)**2 + (y+1.2)**2))", 121)
 
 dx, dy = f.gradiente_vulcão(x, y)
-sp_mt = plot.subplot(x, y, f.vulcão, dx, dy, "Vulcão: sin(sqrt(x^2 + y^2))", 122)
+sp_mt = plot.subplot(x, y, f.vulcão, dx, dy, "Vulcão: -np.cos(1.15*np.sqrt(2+x**2 + y**2))", 122)
 
 plt.show()
