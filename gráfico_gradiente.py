@@ -9,11 +9,11 @@ class Funções:
         self.vulcão = self.parece_um_vulcão(x, y)
     
     def montanha(self, x, y):
-        self.pico_de_montanha = (3**-(x**2 + y**2))
+        self.pico_de_montanha = (3**-(x**2 + y**2))+(0.36 * 2**-((x)**2 + (y-2.4)**2))+(0.36 * 2**-((x)**2 + (y+2.4)**2))
         return self.pico_de_montanha
 
     def parece_um_vulcão(self, x, y):
-        self.vulcão = np.sin(np.sqrt(x**2 + y**2))
+        self.vulcão = np.sinh(np.sqrt(x**2 + y**2))
         return self.vulcão
 
     def gradiente_montanha(self, x, y):
